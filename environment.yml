@@ -1,0 +1,6 @@
+name: eestinltk
+dependencies:
+  - python=3.5
+  - pip:
+    - EstNLTK==1.4.1
+    - gunicorn
