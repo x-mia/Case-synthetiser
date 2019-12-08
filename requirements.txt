@@ -10,7 +10,6 @@ cryptography==2.8
 cycler==0.10.0
 decorator==4.4.1
 dominate==2.4.0
-estnltk
 Flask==1.1.1
 Flask-Bootstrap==3.3.7.1
 Flask-WTF==0.14.2

@@ -1,7 +1,0 @@
-name: eestinltk
-dependencies:
-  - python=3.6
-  - pip:
-    - EstNLTK==1.6
-    - gunicorn
-    - flask
