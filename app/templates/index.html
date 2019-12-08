@@ -2,21 +2,7 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>Case synthesis</h1>
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form, action=url_for('index')) }}
-        </div>
-    </div>
-
-    <!-- Mikiho cool stuff -->
-    <!-- <form action="{{ url_for('index') }}" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.word.label }}<br>
-            {{ form.word(size=32) }}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form> -->
-    <a href="{{ url_for('index') }}">Dictionary</a>
+    <h1>Estonian_Slovak projects</h1>
+    <a href="{{ url_for('synthesis_intro') }}">Case synthesis</a>
+    <a href="{{ url_for('dict_intro') }}">Dictionary</a>
 {% endblock %}

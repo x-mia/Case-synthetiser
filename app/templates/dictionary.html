@@ -3,14 +3,25 @@
 
 {% block app_content %}
     <h1>Estonian-Slovak dictionary</h1>
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form, action=url_for('dictionary', word=cls.word)) }}
-        </div>
+    {{ word }}
+    {{ entry.est_word }}
+
+    <div class='container'>
+      <table class="table">
+        <thead>
+          <tr>
+        <th>Slovak words</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {% for item in entry.svk_words %}
+              <td> {{ item }} </td>
+            {% endfor %}
+          </tr>
+
+      </table>
     </div>
 
-    {% for item in synthesized %}
-      <p> {{ item }} </p>
-    {% endfor %}
-    <a href="{{ url_for('index') }}">Back</a>
+    <a href="{{ url_for('dict_intro') }}">Back</a>
 {% endblock %}

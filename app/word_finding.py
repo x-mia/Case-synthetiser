@@ -1,24 +1,45 @@
 from pandas import read_csv
 from difflib import get_close_matches
 from estnltk import Text
+from collections import namedtuple
 
-data = read_csv("sonaraamat2.csv")
+Entry = namedtuple('Entry', 'est_word est_postag svk_words svk_postags score sagedus sg_gen sg_part sg_ill short_ill pl_part da_inf first_pers impers vocabulary sonaveeb')
 
-word = input("Enter word: ")
+# data = read_csv("sonaraamat4.csv")
 
-def get_meaning(w):
+# word = input("Enter word: ")
+
+def get_meaning(w, data):
     w = Text(w)
-    w = word.tag_layer().morph_analysis["lemma"][0][0]
+    w = w.tag_layer().morph_analysis["lemma"][0][0]
     w = w.lower()
     if any(data["Eesti sõna"].isin([w])):
-        return data[data["Eesti sõna"] == w]
+        df = data[data["Eesti sõna"] == w]
+        first_row = df.iloc[0]
+        entry = Entry(est_word=first_row["Eesti sõna"], est_postag=first_row["Est. sõnaliik"],
+        svk_words=df["Slovaki sõna"].tolist(), svk_postags=df["Slov. sõnaliik"].tolist(), score=first_row["Skoor"],
+        sagedus=first_row["Sagedus"], sg_gen=first_row["SG GEN"], sg_part=first_row["SG PART"],
+        sg_ill=first_row["SG ILL"], short_ill=first_row["SHORT ILL"], pl_part=first_row["PL PART"],
+        da_inf=first_row["DA INF"], first_pers=first_row["1.isik aktiiv"], impers=first_row["Impersonaal"],
+        vocabulary=first_row["Põhisõnavara esinev"], sonaveeb=first_row["Sõnaveeb"])
+        return entry
+
     elif len(get_close_matches(w, data["Eesti sõna"])) > 0:
         close_match = get_close_matches(w, data["Eesti sõna"])[0]
         print("Did you mean this instead?: Enter y if yes or n if no")
         print(close_match)
         choice = input()
         if choice == "y":
-            return data[data["Eesti sõna"] == close_match]
+            df = data[data["Eesti sõna"] == close_match]
+            first_row = df.iloc[0]
+            entry = Entry(est_word=first_row["Eesti sõna"], est_postag=first_row["Est. sõnaliik"],
+            svk_words=df["Slovaki sõna"].tolist(), svk_postags=df["Slov. sõnaliik"].tolist(), score=first_row["Skoor"],
+            sagedus=first_row["Sagedus"], sg_gen=first_row["SG GEN"], sg_part=first_row["SG PART"],
+            sg_ill=first_row["SG ILL"], short_ill=first_row["SHORT ILL"], pl_part=first_row["PL PART"],
+            da_inf=first_row["DA INF"], first_pers=first_row["1.isik aktiiv"], impers=first_row["Impersonaal"],
+            vocabulary=first_row["Põhisõnavara esinev"], sonaveeb=first_row["Sõnaveeb"])
+            return entry
+
         elif choice == "n":
             print("The word doesn't exist.")
         else:
@@ -27,6 +48,6 @@ def get_meaning(w):
         print("The word doesn't exist.")
 
 
-meaning = get_meaning(word)
-
-print("Meaning: " , meaning)
+# meaning = get_meaning(word, data)
+#
+# print("Meaning: " , meaning)
