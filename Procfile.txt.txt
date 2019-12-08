@@ -1,1 +1,2 @@
 web: gunicorn app:cases
+heroku ps:scale web=1
